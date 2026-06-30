@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "node scripts/build-check.js",
+    "build": "node scripts/build-site.js && node scripts/build-check.js",
     "start": "python3 -m http.server 4174"
   }
 }
