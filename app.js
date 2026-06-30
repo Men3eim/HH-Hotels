@@ -86,11 +86,58 @@ function renderFooterHotels() {
 }
 
 function renderFeaturedHeroImage() {
-  const heroImage = document.querySelector("#hero-image");
-  if (!heroImage) return;
-  const featured = hotels[0];
-  heroImage.src = asset(featured.images[0]);
-  heroImage.alt = featured.name;
+  const slideA = document.querySelector("#hero-image-a");
+  const slideB = document.querySelector("#hero-image-b");
+  const name = document.querySelector("#hero-current-name");
+  const location = document.querySelector("#hero-current-location");
+  const progress = document.querySelector("#hero-progress-bar");
+  if (!slideA || !slideB) return;
+
+  const heroHotels = hotels.filter((hotel) => hotel.images.length > 0).slice(0, 8);
+  let currentIndex = 0;
+  let activeSlide = slideA;
+  let idleSlide = slideB;
+
+  function updateSpotlight(hotel) {
+    if (name) name.textContent = hotel.name;
+    if (location) location.textContent = hotel.location;
+  }
+
+  function restartProgress() {
+    if (!progress) return;
+    progress.style.animation = "none";
+    progress.offsetHeight;
+    progress.style.animation = "";
+  }
+
+  function showHotel(index, isInitial = false) {
+    const hotel = heroHotels[index];
+    const image = asset(hotel.images[0]);
+
+    idleSlide.src = image;
+    idleSlide.alt = hotel.name;
+    updateSpotlight(hotel);
+    restartProgress();
+
+    if (isInitial) {
+      activeSlide.src = image;
+      activeSlide.alt = hotel.name;
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      idleSlide.classList.add("is-active");
+      activeSlide.classList.remove("is-active");
+      [activeSlide, idleSlide] = [idleSlide, activeSlide];
+    });
+  }
+
+  showHotel(currentIndex, true);
+
+  window.setInterval(() => {
+    currentIndex = (currentIndex + 1) % heroHotels.length;
+    showHotel(currentIndex);
+  }, 1500);
 }
 
 function renderFeaturedImage() {

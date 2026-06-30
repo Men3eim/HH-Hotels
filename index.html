@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=2">
   </head>
   <body data-base="">
     <header class="site-header">
@@ -34,15 +34,27 @@
     <main>
       <section class="hero">
         <div class="hero-media">
-          <img id="hero-image" src="" alt="">
+          <img id="hero-image-a" class="hero-slide is-active" src="" alt="">
+          <img id="hero-image-b" class="hero-slide" src="" alt="">
         </div>
         <div class="hero-inner">
-          <p class="eyebrow reveal">UK hospitality collection</p>
-          <h1 class="reveal">H&H Hotels</h1>
-          <p class="hero-copy reveal">A modern collection of coastal, city and country-town hotels across the United Kingdom, built around simple booking, memorable locations and warm hospitality.</p>
-          <div class="hero-actions reveal">
-            <a class="btn btn-light" href="#hotels">Explore hotels</a>
-            <a class="btn btn-outline-light" href="#careers">Work with us</a>
+          <div class="hero-content">
+            <p class="eyebrow reveal">UK hospitality collection</p>
+            <h1 class="reveal">H&H Hotels</h1>
+            <p class="hero-copy reveal">A modern collection of coastal, city and country-town hotels across the United Kingdom, built around simple booking, memorable locations and warm hospitality.</p>
+            <div class="hero-actions reveal">
+              <a class="btn btn-light" href="#hotels">Explore hotels</a>
+              <a class="btn btn-outline-light" href="#careers">Work with us</a>
+            </div>
+          </div>
+          <aside class="hero-spotlight reveal" aria-label="Featured hotel">
+            <p>Now showcasing</p>
+            <strong id="hero-current-name">Valley of Rocks Hotel</strong>
+            <span id="hero-current-location">Lynton, North Devon</span>
+            <a href="#hotels">View collection</a>
+          </aside>
+          <div class="hero-progress" aria-hidden="true">
+            <span id="hero-progress-bar"></span>
           </div>
         </div>
       </section>
@@ -151,6 +163,6 @@
     </footer>
 
     <script src="data.js"></script>
-    <script src="app.js"></script>
+    <script src="app.js?v=2"></script>
   </body>
 </html>
