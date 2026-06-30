@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=2">
+    <link rel="stylesheet" href="styles.css?v=3">
   </head>
   <body data-base="">
     <header class="site-header">
@@ -29,7 +29,7 @@
         <a href="#contact">Contact</a>
       </nav>
       <div class="header-actions">
-        <a class="btn btn-light" href="#hotels">Book now</a>
+        <a class="btn btn-primary header-cta" href="#hotels">Book Now</a>
         <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
           <span></span>
           <span></span>
@@ -45,19 +45,19 @@
         </div>
         <div class="hero-inner">
           <div class="hero-content">
-            <p class="eyebrow reveal">UK hospitality collection</p>
-            <h1 class="reveal">H&H Hotels</h1>
-            <p class="hero-copy reveal">A modern collection of coastal, city and country-town hotels across the United Kingdom, built around simple booking, memorable locations and warm hospitality.</p>
+            <p class="eyebrow reveal">H&H Hotels collection</p>
+            <h1 class="reveal">Discover Characterful Hotels Across the UK</h1>
+            <p class="hero-copy reveal">From coastal escapes to city stays, H&H Hotels brings together welcoming properties in memorable locations.</p>
             <div class="hero-actions reveal">
-              <a class="btn btn-light" href="#hotels">Explore hotels</a>
-              <a class="btn btn-outline-light" href="#careers">Work with us</a>
+              <a class="btn btn-primary" href="#hotels">Explore Hotels</a>
+              <a class="btn btn-outline-light" href="#hotels">Book Your Stay</a>
             </div>
           </div>
           <aside class="hero-spotlight reveal" aria-label="Featured hotel">
             <p>Now showcasing</p>
             <strong id="hero-current-name">Valley of Rocks Hotel</strong>
             <span id="hero-current-location">Lynton, North Devon</span>
-            <a href="#hotels">View collection</a>
+            <a href="#featured">View Featured Hotel</a>
           </aside>
           <div class="hero-progress" aria-hidden="true">
             <span id="hero-progress-bar"></span>
@@ -68,79 +68,96 @@
       <section class="hero-stat-row" aria-label="H&H Hotels highlights">
         <div class="hero-stat">
           <strong>12</strong>
-          <span>Hotels</span>
+          <span>UK hotels</span>
         </div>
         <div class="hero-stat">
-          <strong>UK</strong>
-          <span>Locations</span>
+          <strong>3</strong>
+          <span>Stay styles</span>
         </div>
         <div class="hero-stat">
-          <strong>24/7</strong>
-          <span>Booking access</span>
+          <strong>Easy</strong>
+          <span>Booking links</span>
         </div>
       </section>
 
-      <section id="about" class="section split">
-        <div class="feature-panel reveal">
-          <p class="section-kicker">Who we are</p>
-          <h2>Hotels with local character, managed with group-level ambition.</h2>
-          <p>H&H Hotels brings together a growing UK portfolio: seaside favourites, practical city stays and calmer country-town addresses. The collection is designed for guests who want clear choices and direct routes to book.</p>
-          <div class="section-actions">
-            <a class="btn btn-light" href="#hotels">View portfolio</a>
-          </div>
-        </div>
-        <div class="feature-image reveal">
-          <img id="feature-image" src="" alt="">
-        </div>
+      <section id="featured" class="section">
+        <div id="featured-hotel"></div>
       </section>
 
-      <section id="hotels" class="section-wide">
+      <section id="hotels" class="section-wide hotels-section">
         <div class="portfolio-heading">
           <div>
-            <p class="section-kicker">Our hotels</p>
-            <h2 class="section-title">Explore the H&H portfolio.</h2>
+            <p class="section-kicker">Explore our hotels</p>
+            <h2 class="section-title">Choose your next H&H stay.</h2>
           </div>
-          <p class="section-lede">Each hotel has its own dedicated page, gallery and Booking.com link for quick reservations.</p>
+          <p class="section-lede">Browse the collection by stay style, open a hotel page for more detail, then continue to Booking.com when you are ready to reserve.</p>
+        </div>
+        <div class="filter-tabs" role="tablist" aria-label="Filter hotels by category">
+          <button class="filter-tab is-active" type="button" data-filter="All Hotels">All Hotels</button>
+          <button class="filter-tab" type="button" data-filter="Coastal">Coastal</button>
+          <button class="filter-tab" type="button" data-filter="City">City</button>
+          <button class="filter-tab" type="button" data-filter="Country Town">Country Town</button>
         </div>
         <div id="hotel-grid" class="hotel-grid"></div>
       </section>
 
-      <section class="section-wide band">
+      <section id="stay-types" class="section">
+        <div class="section-heading">
+          <p class="section-kicker">Choose your stay</p>
+          <h2 class="section-title">Find the setting that suits your trip.</h2>
+          <p class="section-lede">Whether you want sea air, city access or a calmer country-town base, the collection is designed around practical, welcoming stays.</p>
+        </div>
+        <div id="category-grid" class="category-grid"></div>
+      </section>
+
+      <section id="why-book" class="section-wide trust-band">
         <div class="section">
-          <p class="section-kicker">Our approach</p>
-          <h2 class="section-title">Modern hospitality, practical delivery.</h2>
-          <p class="section-lede">The brand style is corporate, clean and image-led: confident enough for investors and partners, clear enough for guests booking their next stay.</p>
-          <div class="values-grid">
-            <article class="value-card reveal">
-              <span>1</span>
-              <h3>Showcase</h3>
-              <p>Every property gets a strong visual page with galleries, highlights and a booking route.</p>
-            </article>
-            <article class="value-card reveal">
-              <span>2</span>
-              <h3>Convert</h3>
-              <p>Booking calls to action stay visible across cards, hotel pages and the footer.</p>
-            </article>
-            <article class="value-card reveal">
-              <span>3</span>
-              <h3>Grow</h3>
-              <p>The structure is ready for more hotels, richer descriptions and future direct booking tools.</p>
-            </article>
+          <div class="section-heading">
+            <p class="section-kicker">Why book with H&H Hotels?</p>
+            <h2 class="section-title">A simpler way to discover welcoming UK hotels.</h2>
           </div>
+          <div id="trust-grid" class="trust-grid"></div>
         </div>
       </section>
 
-      <section id="careers" class="section">
+      <section id="reviews" class="section reviews-layout">
+        <div>
+          <p class="section-kicker">Guest confidence</p>
+          <h2 class="section-title">Plan your stay with more confidence.</h2>
+          <p class="section-lede">Ratings shown here are placeholders until live Booking.com, Google or Tripadvisor scores are connected.</p>
+          <div class="rating-panel reveal">
+            <strong>8.4</strong>
+            <span>Average guest rating placeholder</span>
+          </div>
+        </div>
+        <div id="testimonial-grid" class="testimonial-grid"></div>
+      </section>
+
+      <section id="about" class="section about-section">
+        <div class="about-copy reveal">
+          <p class="section-kicker">About H&H Hotels</p>
+          <h2 class="section-title">A growing UK hotel collection with local character.</h2>
+          <p>H&H Hotels brings together a portfolio of independent-feeling properties across coastal, city and country-town destinations. Each hotel has its own personality, while the collection gives guests one clear place to explore the hotels and continue to book.</p>
+          <a class="btn btn-secondary" href="#hotels">Explore Hotels</a>
+        </div>
+        <div class="map-placeholder reveal" aria-label="Map placeholder">
+          <span>UK locations map placeholder</span>
+          <p>Add a live map or regional pins here when final location data is ready.</p>
+        </div>
+      </section>
+
+      <section id="careers" class="section career-section">
         <div class="career-panel reveal">
           <div class="career-copy">
             <p class="section-kicker">Careers</p>
             <h2 class="section-title">Work with us.</h2>
-            <p class="section-lede">We are always interested in meeting people who care about guests, service and the everyday details that make hotels run well. Contact our HR team for current opportunities across the H&H Hotels portfolio.</p>
+            <p class="section-lede">Join hotel teams who care about guests, service and the details that make every stay feel welcoming.</p>
           </div>
           <div class="career-contact">
             <p class="section-kicker">HR contact</p>
             <a class="contact-link" href="mailto:hr@hh-hotels.co.uk">hr@hh-hotels.co.uk</a>
             <a class="contact-link" href="tel:+442081529133">02081529133</a>
+            <a class="btn btn-light" href="mailto:hr@hh-hotels.co.uk">Contact HR</a>
           </div>
         </div>
       </section>
@@ -150,7 +167,7 @@
       <div class="footer-grid">
         <div>
           <img class="footer-logo" src="Logo/Logo.jpeg" alt="H&H Hotels logo">
-          <p>H&H Hotels is a UK hospitality collection with hotels across coastal, city and country-town destinations.</p>
+          <p>Explore characterful H&H Hotels across the UK, then continue to the hotel booking page when you are ready to reserve.</p>
         </div>
         <div>
           <h2>Hotels</h2>
@@ -160,15 +177,20 @@
           <h2>Contact</h2>
           <p><a href="mailto:hr@hh-hotels.co.uk">hr@hh-hotels.co.uk</a></p>
           <p><a href="tel:+442081529133">02081529133</a></p>
+          <div class="social-placeholder">
+            <a href="#" aria-label="Instagram placeholder">Instagram</a>
+            <a href="#" aria-label="Facebook placeholder">Facebook</a>
+            <a href="#" aria-label="LinkedIn placeholder">LinkedIn</a>
+          </div>
         </div>
       </div>
       <div class="footer-bottom">
         <span>H&H Hotels</span>
-        <span>Built for portfolio showcasing and Booking.com reservations.</span>
+        <span><a href="#">Privacy Policy</a> / <a href="#">Terms</a> / <a href="#">Accessibility</a></span>
       </div>
     </footer>
 
     <script src="data.js"></script>
-    <script src="app.js?v=2"></script>
+    <script src="app.js?v=3"></script>
   </body>
 </html>
