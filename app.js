@@ -231,9 +231,14 @@ function setRevealAnimations() {
   reveals.forEach((node) => observer.observe(node));
 }
 
-function renderPortfolio(filter = "All Hotels") {
+function renderPortfolio(filter = "All Hotels", force = false) {
   const grid = document.querySelector("#hotel-grid");
   if (!grid) return;
+
+  if (!force && filter === "All Hotels" && grid.children.length > 0) {
+    setRevealAnimations();
+    return;
+  }
 
   const filteredHotels = filter === "All Hotels"
     ? hotels
@@ -249,7 +254,7 @@ function setHotelFilters() {
     tab.addEventListener("click", () => {
       const filter = tab.dataset.filter || "All Hotels";
       tabs.forEach((item) => item.classList.toggle("is-active", item === tab));
-      renderPortfolio(filter);
+      renderPortfolio(filter, true);
       document.querySelector("#hotels")?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   });
@@ -329,16 +334,24 @@ function renderFeaturedHeroImage() {
 
 function renderHomepageSections() {
   const featured = document.querySelector("#featured-hotel");
-  if (featured) featured.innerHTML = FeaturedHotelCard(getHotelBySlug("valley-of-rocks-hotel") || hotels[0]);
+  if (featured && featured.children.length === 0) {
+    featured.innerHTML = FeaturedHotelCard(getHotelBySlug("valley-of-rocks-hotel") || hotels[0]);
+  }
 
   const categoryGrid = document.querySelector("#category-grid");
-  if (categoryGrid) categoryGrid.innerHTML = Object.keys(categoryMeta).map(CategoryCard).join("");
+  if (categoryGrid && categoryGrid.children.length === 0) {
+    categoryGrid.innerHTML = Object.keys(categoryMeta).map(CategoryCard).join("");
+  }
 
   const trustGrid = document.querySelector("#trust-grid");
-  if (trustGrid) trustGrid.innerHTML = trustItems.map(TrustCard).join("");
+  if (trustGrid && trustGrid.children.length === 0) {
+    trustGrid.innerHTML = trustItems.map(TrustCard).join("");
+  }
 
   const testimonialGrid = document.querySelector("#testimonial-grid");
-  if (testimonialGrid) testimonialGrid.innerHTML = testimonials.map(TestimonialCard).join("");
+  if (testimonialGrid && testimonialGrid.children.length === 0) {
+    testimonialGrid.innerHTML = testimonials.map(TestimonialCard).join("");
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {

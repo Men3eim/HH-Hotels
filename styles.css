@@ -347,6 +347,45 @@ h1,
   text-transform: uppercase;
 }
 
+.booking-path {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  width: min(1100px, calc(100% - 36px));
+  margin: 18px auto 0;
+  background: rgba(21, 21, 21, 0.1);
+  box-shadow: var(--soft-shadow);
+}
+
+.booking-path div {
+  padding: 24px 28px;
+  background: #fffaf4;
+}
+
+.booking-path span {
+  display: block;
+  margin-bottom: 16px;
+  color: var(--clay);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.booking-path strong {
+  display: block;
+  margin-bottom: 6px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.booking-path p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
 .hero-spotlight {
   padding: 28px;
   border: 1px solid rgba(255, 255, 255, 0.24);
@@ -864,6 +903,7 @@ h1,
 
   .hero-inner,
   .hero-stat-row,
+  .booking-path,
   .split,
   .career-panel,
   .footer-grid,
@@ -943,6 +983,11 @@ h1,
   .hero-stat-row {
     margin-top: 0;
     width: 100%;
+  }
+
+  .booking-path {
+    width: 100%;
+    margin-top: 0;
   }
 
   .hotel-grid,
