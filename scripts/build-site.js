@@ -5,6 +5,9 @@ const { hotels, categories } = require("../data/hotels.js");
 const SITE_URL = "https://www.hh-hotels.com";
 const ROOT = path.resolve(__dirname, "..");
 const FALLBACK_IMAGE = "Logo/Logo.jpeg";
+const PHONE_DISPLAY = "020 8152 9133";
+const PHONE_TEL = "+442081529133";
+const ASSET_VERSION = "20260701a";
 
 function ensureDir(filePath) {
   fs.mkdirSync(path.dirname(path.join(ROOT, filePath)), { recursive: true });
@@ -53,7 +56,9 @@ function bookingButton(hotel, label = "Book Now", className = "btn btn-primary")
     return `<a class="${className}" href="${hotelUrl(hotel)}">${escapeHtml(label === "Book Now" ? "View Hotel" : label)}</a>`;
   }
 
-  return `<a class="${className}" href="${escapeAttr(hotel.bookingUrl)}" target="_blank" rel="noopener">${escapeHtml(label)}</a>`;
+  const ariaLabel = label === "Book Now" ? ` aria-label="Book ${escapeAttr(hotel.name)} on Booking.com"` : "";
+
+  return `<a class="${className}" href="${escapeAttr(hotel.bookingUrl)}" target="_blank" rel="noopener"${ariaLabel}>${escapeHtml(label)}</a>`;
 }
 
 function viewButton(hotel, label = "View Hotel", className = "btn btn-secondary") {
@@ -122,7 +127,7 @@ function footer() {
         <div>
           <h2>Contact</h2>
           <div class="footer-links">
-            <a href="tel:+442081529133">02081529133</a>
+            <a href="tel:${PHONE_TEL}">${PHONE_DISPLAY}</a>
             <a href="mailto:hr@hh-hotels.co.uk">hr@hh-hotels.co.uk</a>
             <a href="/contact/">Guest enquiries</a>
           </div>
@@ -166,14 +171,14 @@ function layout({ title, description, active, path: pagePath, body, ogImage, jso
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
     ${preload}
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles.css?v=${ASSET_VERSION}">
     ${schema}
   </head>
   <body>
     ${header(active)}
     ${body}
     ${footer()}
-    <script src="/assets/js/site.js" defer></script>
+    <script src="/assets/js/site.js?v=${ASSET_VERSION}" defer></script>
   </body>
 </html>
 `;
@@ -189,7 +194,7 @@ function heroSlides() {
   ].filter(Boolean);
 
   return heroHotels.map((hotel, index) => `
-    <img class="hero-slide${index === 0 ? " is-active" : ""}" src="${escapeAttr(encodeAsset(hotel.mainImage))}" alt="${escapeAttr(`${hotel.name} hospitality image`)}" ${index === 0 ? `fetchpriority="high"` : `loading="eager"`}>
+    <img class="hero-slide${index === 0 ? " is-active" : ""}" src="${escapeAttr(encodeAsset(hotel.mainImage))}" alt="${escapeAttr(`${hotel.name} hospitality image`)}" decoding="async" ${index === 0 ? `fetchpriority="high"` : `loading="lazy"`}>
   `).join("");
 }
 
@@ -208,7 +213,7 @@ function hotelCard(hotel) {
   return `
     <article class="hotel-card" data-category="${escapeAttr(hotel.category)}">
       <a class="hotel-card__image" href="${hotelUrl(hotel)}" aria-label="View ${escapeAttr(hotel.name)}">
-        <img src="${escapeAttr(encodeAsset(hotel.mainImage))}" alt="${escapeAttr(`${hotel.name} in ${hotel.location}`)}" loading="lazy">
+        <img src="${escapeAttr(encodeAsset(hotel.mainImage))}" alt="${escapeAttr(`${hotel.name} in ${hotel.location}`)}" loading="lazy" decoding="async">
         <span>${escapeHtml(hotel.category)}</span>
       </a>
       <div class="hotel-card__body">
@@ -251,7 +256,7 @@ function featuredHotel(hotel) {
     <section class="section featured-section" id="featured">
       <div class="featured-hotel">
         <div class="featured-hotel__media">
-          <img src="${escapeAttr(encodeAsset(hotel.mainImage))}" alt="${escapeAttr(`${hotel.name} exterior and surroundings`)}" loading="lazy">
+          <img src="${escapeAttr(encodeAsset(hotel.mainImage))}" alt="${escapeAttr(`${hotel.name} exterior and surroundings`)}" loading="lazy" decoding="async">
         </div>
         <div class="featured-hotel__content">
           <p class="kicker">Featured hotel</p>
@@ -274,7 +279,7 @@ function featuredHotel(hotel) {
 function categoryCard({ title, category, text, image, href }) {
   return `
     <article class="category-card">
-      <img src="${escapeAttr(encodeAsset(image))}" alt="${escapeAttr(title)}" loading="lazy">
+      <img src="${escapeAttr(encodeAsset(image))}" alt="${escapeAttr(title)}" loading="lazy" decoding="async">
       <div>
         <span>${escapeHtml(category)}</span>
         <h3>${escapeHtml(title)}</h3>
@@ -325,7 +330,7 @@ function guestConfidenceSection() {
     <section class="section confidence-section">
       <div>
         <p class="kicker">Guest confidence</p>
-        <h2>Guest confidence</h2>
+        <h2>Everything you need before you book.</h2>
         <p>We make it simple to explore each hotel, check the location, view stay details and continue to trusted booking partners.</p>
       </div>
       <div class="confidence-points">
@@ -381,6 +386,23 @@ function bookingPath() {
       `).join("")}
     </section>
   `;
+}
+
+function organizationSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "H&H Hotels",
+    url: SITE_URL,
+    logo: fullAssetUrl(FALLBACK_IMAGE),
+    description: "A collection of coastal, city and country-town hotels across the UK.",
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: PHONE_TEL,
+      contactType: "customer service",
+      email: "hr@hh-hotels.co.uk"
+    }
+  };
 }
 
 function homePage() {
@@ -467,14 +489,15 @@ function homePage() {
     path: "/",
     body,
     ogImage: fullAssetUrl(featured.mainImage),
-    preloadImage: featured.mainImage
+    preloadImage: featured.mainImage,
+    jsonLd: organizationSchema()
   });
 }
 
 function pageHero({ kicker, title, text, image }) {
   return `
     <section class="page-hero">
-      <img src="${escapeAttr(encodeAsset(image))}" alt="" fetchpriority="high">
+      <img src="${escapeAttr(encodeAsset(image))}" alt="" fetchpriority="high" decoding="async">
       <div class="page-hero__overlay"></div>
       <div class="page-hero__content">
         ${kicker ? `<p class="kicker">${escapeHtml(kicker)}</p>` : ""}
@@ -539,7 +562,7 @@ function hotelGallery(hotel) {
     <div class="hotel-gallery">
       ${hotel.gallery.slice(0, 6).map((image, index) => `
         <figure>
-          <img src="${escapeAttr(encodeAsset(image))}" alt="${escapeAttr(`${hotel.name} gallery image ${index + 1}`)}" loading="lazy">
+          <img src="${escapeAttr(encodeAsset(image))}" alt="${escapeAttr(`${hotel.name} gallery image ${index + 1}`)}" loading="lazy" decoding="async">
         </figure>
       `).join("")}
     </div>
@@ -587,7 +610,7 @@ function hotelDetailPage(hotel) {
   const body = `
     <main>
       <section class="hotel-detail-hero">
-        <img src="${escapeAttr(encodeAsset(hotel.mainImage))}" alt="${escapeAttr(`${hotel.name} in ${hotel.location}`)}" fetchpriority="high">
+        <img src="${escapeAttr(encodeAsset(hotel.mainImage))}" alt="${escapeAttr(`${hotel.name} in ${hotel.location}`)}" fetchpriority="high" decoding="async">
         <div class="hotel-detail-hero__overlay"></div>
         <div class="hotel-detail-hero__content">
           <a class="breadcrumb" href="/hotels/">All hotels</a>
@@ -624,7 +647,7 @@ function hotelDetailPage(hotel) {
         ${sectionTitle({
           kicker: "Amenities",
           title: "Helpful stay highlights.",
-          lede: "A simple overview of the details currently available for this hotel."
+          lede: "Practical details to help you choose the right stay."
         })}
         ${amenityList(hotel)}
       </section>
@@ -632,7 +655,7 @@ function hotelDetailPage(hotel) {
         <div>
           <p class="kicker">Location</p>
           <h2>${escapeHtml(hotel.location)}</h2>
-          <p>${escapeHtml(hotel.locationText)}</p>
+          ${hotel.locationText && hotel.locationText !== hotel.location ? `<p>${escapeHtml(hotel.locationText)}</p>` : `<p>Find ${escapeHtml(hotel.name)} in ${escapeHtml(hotel.location)} and use the map link for directions.</p>`}
         </div>
         <a class="btn btn-secondary" href="${escapeAttr(hotel.mapUrl)}" target="_blank" rel="noopener">Open in Google Maps</a>
       </section>
@@ -770,7 +793,7 @@ function careersPage() {
         </div>
         <div class="contact-links">
           <a href="mailto:hr@hh-hotels.co.uk">hr@hh-hotels.co.uk</a>
-          <a href="tel:+442081529133">02081529133</a>
+          <a href="tel:${PHONE_TEL}">${PHONE_DISPLAY}</a>
           <a class="btn btn-primary" href="mailto:hr@hh-hotels.co.uk">Email HR</a>
         </div>
       </section>
@@ -803,7 +826,7 @@ function contactPage() {
           <p class="kicker">Guest enquiries</p>
           <h2>General support</h2>
           <p>For questions about browsing the collection or choosing a hotel, call the H&H Hotels team.</p>
-          <a href="tel:+442081529133">02081529133</a>
+          <a href="tel:${PHONE_TEL}">${PHONE_DISPLAY}</a>
         </article>
         <article class="contact-card">
           <p class="kicker">Reservations</p>

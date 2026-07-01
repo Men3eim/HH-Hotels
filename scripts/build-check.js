@@ -50,7 +50,12 @@ const bannedVisibleCopy = [
   ["UK", " locations map"].join(""),
   ["add", " a live map"].join(""),
   ["managed", " with group-level ambition"].join(""),
-  ["corporate", ", clean and image-led"].join("")
+  ["corporate", ", clean and image-led"].join(""),
+  ["UK", " coast"].join(""),
+  ["Seafront", " UK"].join(""),
+  [">Direct", " booking link<"].join(""),
+  ["A simple overview", " of the details currently available for this hotel."].join(""),
+  "<h2>Guest confidence</h2>"
 ];
 
 for (const file of htmlFiles) {
@@ -68,7 +73,7 @@ const expectedHomepageText = [
   "From coastal escapes to city stays, H&H Hotels brings together welcoming properties in memorable locations.",
   "Explore our hotels",
   "Why book with H&amp;H Hotels?",
-  "Guest confidence"
+  "Everything you need before you book."
 ];
 
 for (const text of expectedHomepageText) {

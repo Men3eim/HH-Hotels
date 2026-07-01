@@ -103,6 +103,17 @@ function mapSearch(query) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 }
 
+function cleanBookingUrl(url) {
+  if (!url) return url;
+
+  try {
+    const parsed = new URL(url);
+    return `${parsed.origin}${parsed.pathname}`;
+  } catch {
+    return url;
+  }
+}
+
 function makeHotel(data) {
   const gallery = data.gallery.length ? data.gallery : ["Logo/Logo.jpeg"];
 
@@ -111,7 +122,8 @@ function makeHotel(data) {
     mainImage: data.mainImage || gallery[0],
     gallery,
     locationText: data.locationText || data.location,
-    mapUrl: data.mapUrl || mapSearch(`${data.name}, ${data.location}`)
+    mapUrl: data.mapUrl || mapSearch(`${data.name}, ${data.location}`),
+    bookingUrl: cleanBookingUrl(data.bookingUrl)
   };
 }
 
@@ -123,10 +135,11 @@ const hotels = [
     location: "Lynton, North Devon",
     category: "Coastal",
     shortDescription: "A characterful North Devon stay close to the dramatic Valley of Rocks, with easy access to coastal walks, sea views and the atmosphere of Lynton.",
-    fullDescription: "Valley of Rocks Hotel is presented as a classic coastal retreat for guests who want scenery, history and simple access to one of Devon's most memorable landscapes. The experience is built around relaxed stays, nearby walks and the charm of a traditional hotel setting.",
+    fullDescription: "Valley of Rocks Hotel is a classic coastal retreat for guests who want scenery, history and simple access to one of Devon's most memorable landscapes. The experience is built around relaxed stays, nearby walks and the charm of a traditional hotel setting.",
+    locationText: "Set in Lynton on the North Devon coast, with the Valley of Rocks, coastal paths and Exmoor within easy reach.",
     gallery: hotelImages.valleyOfRocks,
-    amenities: ["Near the Valley of Rocks", "Coastal walking routes", "Classic hotel character", "Direct booking link"],
-    bookingUrl: "https://www.booking.com/hotel/gb/the-valley-of-rocks.en-gb.html?aid=311984&label=the-valley-of-rocks-woXoYiH5DYjugmFuIQb2MwS267090005723%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-4170893017%3Alp9198011%3Ali%3Adec%3Adm%3Appccp%3DUmFuZG9tSVYkc2RlIyh9YXwxhKG0pUU-mcMVT-JwQpc&sid=56ab1cac3d3c531ecb091ac42e63cf2b&dest_id=-2602350&dest_type=city&dist=0&group_adults=2&group_children=0&hapos=1&hpos=1&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&srepoch=1782835028&srpvid=2a687024f0540588&type=total&ucfs=1&activeTab=main"
+    amenities: ["Near the Valley of Rocks", "Coastal walking routes", "Classic hotel character", "En-suite rooms"],
+    bookingUrl: "https://www.booking.com/hotel/gb/the-valley-of-rocks.en-gb.html"
   }),
   makeHotel({
     slug: "beresford-hotel",
@@ -134,21 +147,24 @@ const hotels = [
     location: "Newquay, Cornwall",
     category: "Coastal",
     shortDescription: "A Newquay base for beach days, town-centre convenience and relaxed Cornish breaks, with bright rooms and simple access to the coast.",
-    fullDescription: "Beresford Hotel is shaped for guests who want Newquay within reach: beaches, local dining, shopping streets and Cornwall's surf-town energy. It suits short breaks, practical stays and guests looking for a straightforward coastal hotel.",
+    fullDescription: "Beresford Hotel suits guests who want Newquay within reach: beaches, local dining, shopping streets and Cornwall's surf-town energy. It works well for short breaks, practical stays and guests looking for a straightforward coastal hotel.",
+    locationText: "In Newquay, Cornwall, close to beaches, the town centre and the coast.",
     gallery: hotelImages.beresford,
-    amenities: ["Newquay location", "Beach break setting", "Town-centre access", "Direct booking link"],
-    bookingUrl: "https://www.booking.com/hotel/gb/the-beresford.en-gb.html?aid=304142&label=gen173nr-10CAEoggI46AdICVgEaFCIAQKYATO4AQfIAQ3YAQPoAQH4AQGIAgGoAgG4Aobjj9IGwAIB0gIkZjVjNjU0NGYtODlkZC00OGIwLTgzOTItZDNlNGExODM4MTY02AIB4AIB&sid=bd2adf6b94aa2b071e9bb31ab62a2a13&all_sr_blocks=128271102_0_2_0_0&checkin=2026-06-30&checkout=2026-07-01&dest_id=1282711&dest_type=hotel&dist=0&group_adults=2&group_children=0&hapos=1&highlighted_blocks=128271102_0_2_0_0&hpos=1&matching_block_id=128271102_0_2_0_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=128271102_0_2_0_0__5952&srepoch=1782837663&srpvid=694a754e2c67011d&type=total&ucfs=1&"
+    amenities: ["Newquay location", "Beach break setting", "Town-centre access", "En-suite rooms"],
+    bookingUrl: "https://www.booking.com/hotel/gb/the-beresford.en-gb.html"
   }),
   makeHotel({
     slug: "sun-hotel",
     name: "Sun Hotel",
-    location: "UK coast",
+    location: "Skegness, Lincolnshire",
     category: "Coastal",
-    shortDescription: "A bright coastal address with a harbour-side feel, ideal for guests who want relaxed rooms and quick access to waterfront moments.",
-    fullDescription: "Sun Hotel brings a clean, easy-going coastal stay into the H&H collection. The listing is suited to guests looking for a practical base with a waterside mood, simple booking and convenient access to local attractions.",
+    shortDescription: "A bright seaside stay on North Parade, steps from Skegness Pier, with relaxed rooms and a welcoming harbour-side feel.",
+    fullDescription: "Sun Hotel offers an easy-going coastal stay in the heart of Skegness. Guests are within walking distance of the pier, beach and local attractions, with comfortable rooms and a practical base for Lincolnshire seaside breaks.",
+    locationText: "On North Parade in Skegness, Lincolnshire, close to Skegness Pier, the beach and the town centre.",
     gallery: hotelImages.sun,
-    amenities: ["Harbour-style setting", "Relaxed rooms", "Coastal access", "Direct booking link"],
-    bookingUrl: "https://www.booking.com/hotel/gb/harbour-flats.en-gb.html?aid=304142&label=gen173nr-10CAEoggI46AdICVgEaFCIAQKYATO4AQfIAQ3YAQPoAQH4AQGIAgGoAgG4ArHkj9IGwAIB0gIkNjc2YWJlZTMtODE1Yy00ODNlLWJiYWUtZGE0MjNlOTViYjc12AIB4AIB&sid=dd7305a0e403321ee12b7929f9d6bc70&all_sr_blocks=1180168309_405759740_2_0_0&checkin=2026-06-30&checkout=2026-07-01&dest_id=11801683&dest_type=hotel&dist=0&group_adults=2&group_children=0&hapos=1&highlighted_blocks=1180168309_405759740_2_0_0&hpos=1&matching_block_id=1180168309_405759740_2_0_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=1180168309_405759740_2_0_0__4013&srepoch=1782837904&srpvid=806475c5793903ca&type=total&ucfs=1&"
+    amenities: ["North Parade location", "Near Skegness Pier", "Relaxed rooms", "Coastal access"],
+    // TODO: Confirm the preferred live booking partner URL for Sun Hotel.
+    bookingUrl: "https://www.booking.com/hotel/gb/the-sun-2.en-gb.html"
   }),
   makeHotel({
     slug: "wembar-hotel",
@@ -156,9 +172,10 @@ const hotels = [
     location: "London",
     category: "City",
     shortDescription: "A compact London stay for guests who want city convenience, transport access and a comfortable base between appointments or sightseeing.",
-    fullDescription: "Wembar Hotel is positioned for practical London visits, from short leisure trips to business travel. The experience focuses on convenience, straightforward rooms and access to the capital's neighbourhoods.",
+    fullDescription: "Wembar Hotel is a practical London base for short leisure trips and business travel. The focus is on convenience, straightforward rooms and access to the capital's neighbourhoods and transport links.",
+    locationText: "In London, with good access to public transport and the city's main districts.",
     gallery: hotelImages.wembar,
-    amenities: ["London location", "Short-stay friendly", "Urban access", "Direct booking link"],
+    amenities: ["London location", "Short-stay friendly", "Urban access", "En-suite rooms"],
     bookingUrl: "https://www.booking.com/hotel/gb/wembar.html"
   }),
   makeHotel({
@@ -168,19 +185,21 @@ const hotels = [
     category: "City",
     shortDescription: "A London hotel with a townhouse character, designed for guests who want a central-feeling stay with simple links across the city.",
     fullDescription: "Amsterdam Hotel gives H&H a refined city option for guests visiting London for work, events or leisure. Its appeal is practical comfort, classic building character and access to the capital's transport network.",
+    locationText: "In London, offering a townhouse-style stay with links across the city.",
     gallery: hotelImages.amsterdam,
-    amenities: ["City links", "Townhouse character", "Business and leisure stays", "Direct booking link"],
+    amenities: ["City links", "Townhouse character", "Business and leisure stays", "En-suite rooms"],
     bookingUrl: "https://www.booking.com/hotel/gb/amsterdamhotel.html"
   }),
   makeHotel({
     slug: "savoy-hotel",
     name: "Savoy Hotel",
-    location: "UK coast",
+    location: "Weston-super-Mare, Somerset",
     category: "Coastal",
-    shortDescription: "A welcoming coastal guesthouse-style stay with simple rooms, practical amenities and a relaxed base for exploring nearby attractions.",
-    fullDescription: "Savoy Hotel is designed for uncomplicated breaks: comfortable rooms, a friendly arrival and a location that keeps guests close to the pace of a classic UK seaside trip.",
+    shortDescription: "A welcoming seaside guesthouse-style stay with simple rooms, practical amenities and a relaxed base for exploring the Somerset coast.",
+    fullDescription: "Savoy Hotel is designed for uncomplicated breaks on the Somerset coast: comfortable rooms, a friendly arrival and a location that keeps guests close to Weston-super-Mare's seafront and local attractions.",
+    locationText: "On Birnbeck Road in Weston-super-Mare, Somerset, with sea views and access to the town's beaches and promenade.",
     gallery: hotelImages.savoy,
-    amenities: ["Guesthouse feel", "Coastal breaks", "Comfortable essentials", "Direct booking link"],
+    amenities: ["Seafront setting", "Coastal breaks", "Comfortable essentials", "En-suite rooms"],
     bookingUrl: "https://www.booking.com/hotel/gb/savoy-b-amp-b.html"
   }),
   makeHotel({
@@ -190,9 +209,10 @@ const hotels = [
     category: "Coastal",
     shortDescription: "A Scarborough hotel for seaside escapes, group visits and family-friendly stays, with generous spaces and access to the town's attractions.",
     fullDescription: "Green Gables Hotel gives guests a comfortable Scarborough base with the scale and flexibility suited to families, groups and longer coastal visits. It is a practical choice for exploring the town, beaches and surrounding Yorkshire coast.",
+    locationText: "In Scarborough, North Yorkshire, close to the coast, town centre and local attractions.",
     gallery: hotelImages.greenGables,
-    amenities: ["Scarborough base", "Family-friendly stays", "Nearby coast and attractions", "Direct booking link"],
-    bookingUrl: "https://www.booking.com/hotel/gb/green-gables-scarborough.en-gb.html?aid=311984&label=green-gables-scarborough-1y_Zw9xEI_SlthjqgxPCewS675507009554%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-1576260044%3Alp9198011%3Ali%3Adec%3Adm%3Appccp%3DUmFuZG9tSVYkc2RlIyh9YXdX6HrtnYy-Ml68sH-ljtU&sid=56ab1cac3d3c531ecb091ac42e63cf2b&all_sr_blocks=1019718003_0_2_0_0&checkin=2026-07-02&checkout=2026-07-03&dest_id=-2607229&dest_type=city&dist=0&group_adults=2&group_children=0&hapos=1&highlighted_blocks=1019718003_0_2_0_0&hpos=1&matching_block_id=1019718003_0_2_0_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=1019718003_0_2_0_0__4782&srepoch=1782837487&srpvid=195874f651a90761&type=total&ucfs=1&"
+    amenities: ["Scarborough base", "Family-friendly stays", "Nearby coast and attractions", "En-suite rooms"],
+    bookingUrl: "https://www.booking.com/hotel/gb/green-gables-scarborough.en-gb.html"
   }),
   makeHotel({
     slug: "villa-rose-hotel",
@@ -201,20 +221,22 @@ const hotels = [
     category: "Coastal",
     shortDescription: "A seaside stay close to Great Yarmouth's visitor attractions, with an easy-going style made for short breaks and coastal weekends.",
     fullDescription: "Villa Rose Hotel is a straightforward coastal option for guests who want to be near the energy of Great Yarmouth. The stay is simple, accessible and focused on giving travellers a convenient base near the seafront.",
+    locationText: "In Great Yarmouth, Norfolk, close to the seafront, attractions and the town centre.",
     gallery: hotelImages.villaRose,
-    amenities: ["Great Yarmouth access", "Seaside weekends", "Simple short stays", "Direct booking link"],
-    bookingUrl: "https://www.booking.com/hotel/gb/villa-rose.html?aid=949424&lang=en-us"
+    amenities: ["Great Yarmouth access", "Seaside weekends", "Simple short stays", "En-suite rooms"],
+    bookingUrl: "https://www.booking.com/hotel/gb/villa-rose.html"
   }),
   makeHotel({
     slug: "marine-parade-hotel",
     name: "Marine Parade Hotel",
-    location: "Seafront UK",
+    location: "Eastbourne, East Sussex",
     category: "Coastal",
-    shortDescription: "A seafront-style hotel for guests who want direct coastal atmosphere, practical rooms and a relaxed place to return after days out.",
-    fullDescription: "Marine Parade Hotel brings a classic promenade mood into the collection. It suits guests who value an easy coastal setting, clear booking and simple comfort close to the waterfront.",
+    shortDescription: "A seafront hotel on Marine Parade, ideal for guests who want direct coastal atmosphere, practical rooms and a relaxed place to return after days out.",
+    fullDescription: "Marine Parade Hotel brings a classic promenade mood to Eastbourne. It suits guests who value an easy coastal setting, clear booking and simple comfort close to the beach, pier and town centre.",
+    locationText: "On Marine Parade in Eastbourne, East Sussex, opposite the pebble beach and close to Eastbourne Pier.",
     gallery: hotelImages.marineParade,
-    amenities: ["Promenade feel", "Coastal location", "Relaxed stays", "Direct booking link"],
-    bookingUrl: "https://www.booking.com/hotel/gb/marineparade.html?aid=949424&lang=en-us"
+    amenities: ["Seafront location", "Promenade setting", "Relaxed stays", "En-suite rooms"],
+    bookingUrl: "https://www.booking.com/hotel/gb/marineparade.html"
   }),
   makeHotel({
     slug: "alumhurst-hotel",
@@ -223,9 +245,10 @@ const hotels = [
     category: "Coastal",
     shortDescription: "A Blackpool base close to the town's entertainment, promenade and visitor attractions, designed for simple, convenient short stays.",
     fullDescription: "Alumhurst Hotel is positioned for guests visiting Blackpool for leisure, events and classic seaside entertainment. The focus is central access, practical comfort and a stay that keeps the town within easy reach.",
+    locationText: "In Blackpool, Lancashire, close to the promenade, entertainment and visitor attractions.",
     gallery: hotelImages.alumhurst,
-    amenities: ["Blackpool access", "Entertainment nearby", "Convenient short breaks", "Direct booking link"],
-    bookingUrl: "https://www.booking.com/hotel/gb/alumhurst-blackpool.en-gb.html?aid=964175&app_hotel_id=1122439&checkin=2026-07-02&checkout=2026-07-03&from_sn=ios&group_adults=2&group_children=0&label=Share-bNrh5M%401782836033&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA%2C"
+    amenities: ["Blackpool access", "Entertainment nearby", "Convenient short breaks", "En-suite rooms"],
+    bookingUrl: "https://www.booking.com/hotel/gb/alumhurst-blackpool.en-gb.html"
   }),
   makeHotel({
     slug: "granby-hotel",
@@ -234,20 +257,22 @@ const hotels = [
     category: "Coastal",
     shortDescription: "A Scarborough hotel with straightforward comfort, close to the town's coastal character and well placed for relaxed Yorkshire breaks.",
     fullDescription: "Granby Hotel offers a practical Scarborough stay for guests who want town access, nearby seaside walks and a dependable base for exploring the Yorkshire coast.",
+    locationText: "In Scarborough, North Yorkshire, with easy access to the coast, town centre and local walks.",
     gallery: hotelImages.granby,
-    amenities: ["Scarborough location", "Town access", "Yorkshire coast breaks", "Direct booking link"],
+    amenities: ["Scarborough location", "Town access", "Yorkshire coast breaks", "En-suite rooms"],
     bookingUrl: "https://www.booking.com/hotel/gb/granby-scarborough.html"
   }),
   makeHotel({
     slug: "limes-hotel",
     name: "Limes Hotel",
-    location: "Market Rasen",
+    location: "Market Rasen, Lincolnshire",
     category: "Country Town",
     shortDescription: "A calm Market Rasen stay with a country-town feel, suited to guests looking for comfort, quiet and access to Lincolnshire surroundings.",
     fullDescription: "Limes Hotel adds a softer country-town note to the H&H portfolio. It suits guests looking for a relaxed stay away from the larger resort towns, with simple access to local routes and nearby countryside.",
+    locationText: "In Market Rasen, Lincolnshire, with access to the town centre and surrounding countryside.",
     gallery: hotelImages.limes,
-    amenities: ["Market Rasen setting", "Calmer stays", "Lincolnshire access", "Direct booking link"],
-    bookingUrl: "https://www.booking.com/hotel/gb/limeshotelmrasen.en-gb.html?aid=964694&app_hotel_id=111310&checkin=2026-07-02&checkout=2026-07-03&from_sn=android&group_adults=1&group_children=0&label=hotel_details-jgD02J%401782838020&no_rooms=1&req_adults=1&req_children=0&room1=A"
+    amenities: ["Market Rasen setting", "Calmer stays", "Lincolnshire access", "En-suite rooms"],
+    bookingUrl: "https://www.booking.com/hotel/gb/limeshotelmrasen.en-gb.html"
   })
 ];
 
