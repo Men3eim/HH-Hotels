@@ -29,5 +29,5 @@ Then open `http://localhost:4174/`
 
 ## Contact
 
-- Email: `hr@hh-hotels.co.uk`
+- Email: `Info@hh-hotels.com`
 - Phone: `020 8152 9133`

@@ -7,7 +7,9 @@ const ROOT = path.resolve(__dirname, "..");
 const FALLBACK_IMAGE = "Logo/Logo.jpeg";
 const PHONE_DISPLAY = "020 8152 9133";
 const PHONE_TEL = "+442081529133";
-const ASSET_VERSION = "20260701a";
+const CONTACT_EMAIL_DISPLAY = "Info@hh-hotels.com";
+const CONTACT_EMAIL_MAILTO = "info@hh-hotels.com";
+const ASSET_VERSION = "20260701b";
 
 function ensureDir(filePath) {
   fs.mkdirSync(path.dirname(path.join(ROOT, filePath)), { recursive: true });
@@ -87,7 +89,6 @@ function header(active = "") {
     <header class="site-header" data-header>
       <a class="brand" href="/" aria-label="H&H Hotels home">
         <img src="/Logo/Logo.jpeg" alt="H&H Hotels logo" width="132" height="78">
-        <span>H&H Hotels</span>
       </a>
       <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="primary-navigation">
         <span></span>
@@ -128,7 +129,7 @@ function footer() {
           <h2>Contact</h2>
           <div class="footer-links">
             <a href="tel:${PHONE_TEL}">${PHONE_DISPLAY}</a>
-            <a href="mailto:hr@hh-hotels.co.uk">hr@hh-hotels.co.uk</a>
+            <a href="mailto:${CONTACT_EMAIL_MAILTO}">${CONTACT_EMAIL_DISPLAY}</a>
             <a href="/contact/">Guest enquiries</a>
           </div>
         </div>
@@ -400,7 +401,7 @@ function organizationSchema() {
       "@type": "ContactPoint",
       telephone: PHONE_TEL,
       contactType: "customer service",
-      email: "hr@hh-hotels.co.uk"
+      email: CONTACT_EMAIL_MAILTO
     }
   };
 }
@@ -766,8 +767,8 @@ function careersPage() {
         </div>
         <div>
           <p>Our teams support the everyday details that shape a stay: warm welcomes, comfortable rooms, helpful local knowledge and smooth guest service.</p>
-          <p>If you are interested in joining H&H Hotels, contact HR with your CV and the location or type of role you are looking for.</p>
-          <a class="btn btn-primary" href="mailto:hr@hh-hotels.co.uk">Contact HR</a>
+          <p>If you are interested in joining H&H Hotels, send your CV and the location or type of role you are looking for.</p>
+          <a class="btn btn-primary" href="mailto:${CONTACT_EMAIL_MAILTO}">Contact Careers</a>
         </div>
       </section>
       <section class="section">
@@ -787,14 +788,14 @@ function careersPage() {
       </section>
       <section class="section contact-panel">
         <div>
-          <p class="kicker">HR contact</p>
-          <h2>Send your enquiry to our HR team.</h2>
+          <p class="kicker">Careers contact</p>
+          <h2>Send your enquiry to our careers team.</h2>
           <p>Email your CV and preferred hotel location, or call if you need to speak to the team.</p>
         </div>
         <div class="contact-links">
-          <a href="mailto:hr@hh-hotels.co.uk">hr@hh-hotels.co.uk</a>
+          <a href="mailto:${CONTACT_EMAIL_MAILTO}">${CONTACT_EMAIL_DISPLAY}</a>
           <a href="tel:${PHONE_TEL}">${PHONE_DISPLAY}</a>
-          <a class="btn btn-primary" href="mailto:hr@hh-hotels.co.uk">Email HR</a>
+          <a class="btn btn-primary" href="mailto:${CONTACT_EMAIL_MAILTO}">Email Careers</a>
         </div>
       </section>
     </main>
@@ -802,7 +803,7 @@ function careersPage() {
 
   return layout({
     title: "Careers at H&H Hotels | Work With Us",
-    description: "Explore hospitality careers with H&H Hotels and contact HR about opportunities across the UK hotel collection.",
+    description: "Explore hospitality careers with H&H Hotels and contact the team about opportunities across the UK hotel collection.",
     active: "careers",
     path: "/careers/",
     body,
@@ -835,10 +836,10 @@ function contactPage() {
           <a href="/hotels/">Explore Hotels</a>
         </article>
         <article class="contact-card">
-          <p class="kicker">Careers and HR</p>
+          <p class="kicker">Careers</p>
           <h2>Work with us</h2>
-          <p>For career enquiries, send your CV and preferred hotel location to the HR team.</p>
-          <a href="mailto:hr@hh-hotels.co.uk">hr@hh-hotels.co.uk</a>
+          <p>For career enquiries, send your CV and preferred hotel location to the team.</p>
+          <a href="mailto:${CONTACT_EMAIL_MAILTO}">${CONTACT_EMAIL_DISPLAY}</a>
         </article>
       </section>
       <section class="section split-section">

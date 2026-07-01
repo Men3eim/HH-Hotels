@@ -80,7 +80,7 @@ body.nav-open .site-header {
   display: inline-flex;
   align-items: center;
   gap: 14px;
-  min-width: 194px;
+  min-width: 0;
   font-weight: 700;
 }
 
